@@ -80,23 +80,23 @@ firstLetter all@(x : xs) = "The first letter of " ++ all ++ " is " ++ [x]
 
 max' :: (Ord a) => a -> a -> a
 max' a b
-    | a <= b        = b
+    | a <= b = b
     | otherwise = b
 
 myCompare :: (Ord a) => a -> a -> Ordering
 a `myCompare` b
-    | a == b         = EQ
-    | a <= b         = LT
+    | a == b = EQ
+    | a <= b = LT
     | otherwise = GT
 
 bmiTell :: Double -> Double -> String
 bmiTell weight height
-        | bmi <= skinny    = "You're underweight, you emo, you!"
-        | bmi <= normal  = "You're supposedly normal, Pffft, I bet you're ugly!"
-        | bmi <= fat           = "You're fat! Lose some weight, fatty!"
-        | otherwise           = "You're a whale, congratulations!"
-        where
-                bmi        = weight / height ^ 2
-                skinny   = 18.5
-                normal = 25.0
-                fat          = 30.0
+    | bmi <= skinny = "You're underweight, you emo, you!"
+    | bmi <= normal = "You're supposedly normal, Pffft, I bet you're ugly!"
+    | bmi <= fat = "You're fat! Lose some weight, fatty!"
+    | otherwise = "You're a whale, congratulations!"
+    where
+      bmi = weight / height ^ 2
+      skinny = 18.5
+      normal = 25.0
+      fat = 30.0
