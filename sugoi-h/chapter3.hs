@@ -100,3 +100,55 @@ bmiTell weight height
       skinny = 18.5
       normal = 25.0
       fat = 30.0
+
+-- greet :: String -> String
+-- greet "Juan" = niceGreeting ++ " Juan!"
+-- greet "Fernando" = niceGreeting ++ " Fernando!"
+-- greet name = badGreeting ++ " " ++ name
+--     where
+--       niceGreeting = "Hellp! So very nice to meet you,"
+--       badGreeting = "Oh! Pfft. It's you."
+-- => Not working
+
+badGreeting  :: String
+badGreeting = "Oh! Pfft. It's you."
+
+niceGreeting :: String
+niceGreeting = "Hello! So very nice to see you"
+
+greet :: String -> String
+greet "Juan" = niceGreeting ++ " Juan!"
+greet "Fernando" = niceGreeting ++ " Fernando!"
+greet name = badGreeting ++ " " ++ name
+
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
+    where
+      (f:_) = firstname
+      (l:_) = lastname
+
+calcBmis :: [ (Double, Double)] -> [Double]
+calcBmis xs = [bmi w h | (w, h) <- xs]
+    where
+      bmi weight height = weight / height ^ 2
+
+cylinder :: Double -> Double -> Double
+cylinder r h =
+    let
+        sideArea = 2 * pi * r * h
+        topArea = pi * r ^ 2
+    in
+        sideArea + 2 * topArea
+
+-- 4 * (let a = 9 in a + 1) +2
+-- => 42
+
+-- [let square x = x * x in (square 5, square 3, square 2)]
+-- => [(25,9,4)]
+
+-- (let a = 100; b = 200; c = 300 in a*b*c, let foo = "Hey "; bar = "there!" in foo ++ bar)
+-- => (6000000,"Hey there!")
+
+-- (let (a, b, c) = (1, 2, 3) in a+b+c) * 100
+-- => 600
+
