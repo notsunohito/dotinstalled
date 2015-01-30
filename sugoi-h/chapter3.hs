@@ -127,10 +127,10 @@ initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
       (f:_) = firstname
       (l:_) = lastname
 
-calcBmis :: [ (Double, Double)] -> [Double]
-calcBmis xs = [bmi w h | (w, h) <- xs]
-    where
-      bmi weight height = weight / height ^ 2
+-- calcBmis :: [ (Double, Double)] -> [Double]
+-- calcBmis xs = [bmi w h | (w, h) <- xs]
+--     where
+--       bmi weight height = weight / height ^ 2
 
 cylinder :: Double -> Double -> Double
 cylinder r h =
@@ -152,3 +152,19 @@ cylinder r h =
 -- (let (a, b, c) = (1, 2, 3) in a+b+c) * 100
 -- => 600
 
+calcBmis :: [(Double, Double)] -> [Double]
+calcBmis xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]
+
+describeList :: [a] -> String
+describeList ls = "The list is "
+                  ++ case ls of
+                       []   -> "empty."
+                       [x] -> "a singleton list."
+                       xs  -> "a longer list."
+
+describeList' :: [a] -> String
+describeList' ls = "The list is " ++ what ls
+    where
+      what [] = "empty."
+      what [x] = "a singleton list."
+      what xs = "a longer list."
