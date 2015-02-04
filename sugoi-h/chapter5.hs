@@ -135,3 +135,118 @@ largestDivisible = head (filter p [100000, 99999..])
 
 -- takeWhile (/=' ') "elephants know how to party"
 -- => "elephants"
+-- sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
+-- => 166650
+-- sum (takeWhile (<10000) [m | m <- [n^2 | n <- [1..]], odd m])
+-- => 166650
+
+chain :: Integer -> [Integer]
+chain 1 = [1]
+chain n
+    | even n = n : chain (n `div` 2)
+    | odd n = n : chain (n * 3 + 1)
+
+-- chain 13
+-- => [13,40,20,10,5,16,8,4,2,1]
+-- chain 10
+-- => [10,5,16,8,4,2,1]
+-- chain 1
+-- => [1]
+-- chain 30
+-- => [30,15,46,23,70,35,106,53,160,80,40,20,10,5,16,8,4,2,1]
+
+-- numLongChains :: Int
+-- numLongChains = length (filter isLong (map chain [1..100]))
+--     where
+--       isLong xs = length xs > 15
+-- numLongChains
+-- => 66
+
+listOfFuns :: [Integer -> Integer]
+listOfFuns = map (*) [0..]
+-- (listOfFuns !! 4) 5
+-- => 20
+numLongChains :: Int
+numLongChains = length (filter (\xs -> length xs > 15)
+                                                           (map chain [1..100]))
+
+-- map (+3) [1,6,3,2]
+-- => [4,9,6,5]
+-- map (\x -> x + 3) [1,6,3,2]
+-- => [4,9,6,5]
+
+-- zipWith (\a b -> (a * 30 + 3) / b) [5,4,3,2,1] [1,2,3,4,5]
+-- => [153.0,61.5,31.0,15.75,6.6]
+-- map (\ (a,b) -> a + b) [(1,2),(3,5),(6,3),(2,6),(2,5)]
+-- => [3,8,9,8,7]
+
+addThree :: Int -> Int -> Int -> Int
+addThree x y z = x + y + z
+
+addThree' :: Int -> Int -> Int -> Int
+addThree' = \x -> \y -> \z -> x + y + z
+
+flip'' :: (a -> b -> c) -> b -> a -> c
+flip'' f = \x y -> f y x
+-- zipWith (flip (++)) ["love you", "love me"] ["i ", "you "]
+-- => ["i love you","you love me"]
+-- map (flip subtract 20) [1,2,3,4]
+-- => [19,18,17,16]
+
+-- :t foldl
+-- => foldl :: (a -> b -> a) -> a -> [b] -> a
+-- :t foldr
+-- => foldr :: (a -> b -> b) -> b -> [a] -> b
+
+-- sum' :: (Num a) => [a] -> a
+-- sum' xs = foldl (\acc x -> acc + x) 0 xs
+sum' :: (Num a) => [a] -> a
+sum' = foldl (+) 0
+-- sum' [1,2,3,4,5]
+-- => 15
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' f xs = foldr (\x acc -> f x : acc) [] xs
+-- map'' (+3) [1,2,3]
+-- => [4,5,6]
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' y ys = foldr (\x acc -> if x == y then True else acc) False ys
+
+-- :t foldl1
+-- => foldl1 :: (a -> a -> a) -> [a] -> a
+-- :t foldr1
+-- => foldr1 :: (a -> a -> a) -> [a] -> a
+
+maximum' :: (Ord a) => [a] -> a
+maximum' = foldl1 max
+
+-- maximum' [1,5,3,6,1]
+-- => 6
+-- maximum' []
+-- => *** Exception: Prelude.foldl1: empty list
+
+reverse' :: [a] -> [a]
+reverse' = foldl (\acc x -> x : acc) []
+
+reverse'' :: [a] -> [a]
+reverse'' = foldl (flip (:)) []
+
+product' :: (Num a) => [a] -> a
+product' = foldl (*) 1
+
+filter'' :: (a -> Bool) -> [a] -> [a]
+filter'' p = foldr (\x acc -> if p x then x : acc else acc) []
+
+last' :: [a] -> a
+last' = foldl1 (\_ x -> x)
+
+-- foldr f z [3,4,5,6]
+-- => f 3 (f 4 (f 5 (f 6 z)))
+-- foldr (+) 0 [3,4,5,6]
+-- => 3 + (4 + (5 + 6 + 0))
+-- => (+) 3 ( (+) 4 ( (+) 5 ( (+) 6 0 ) ) )
+
+-- foldl g z [3,4,5,6]
+-- => g (g (g (g (g z 3) 4) 5) 6
+
