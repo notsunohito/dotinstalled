@@ -277,3 +277,41 @@ sqrtSums = length (takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))) + 1
 -- :t ($)
 -- => ($) :: (a -> b) -> a -> b
 -- => f $ x = f x
+
+-- sum (filter (>10) (map (*2) [2..10]))
+-- => 80
+-- sum $ filter (>10) $ map (*2) [2..10]
+-- => 80
+-- map ($ 3) [(4+),(10*),(^2), (sqrt)]
+-- => [7.0,30.0,9.0,1.7320508075688772]
+
+-- :t (.)
+-- => (.) :: (b -> c) -> (a -> b) -> a -> c
+-- f . g = \x -> f (g x)
+
+-- map (\x -> negate (abs x)) [5,-3,-6,7,3,2,-19,24]
+-- => [-5,-3,-6,-7,-3,-2,-19,-24]
+-- map (negate . abs) [5,-3,-6,7,-3,2,19,24]
+-- => [-5,-3,-6,-7,-3,-2,-19,-24]
+
+-- map (\xs -> negate (sum (tail xs))) [[1..5],[3..6],[1..7]]
+-- => [-14,-15,-27]
+-- map (negate . sum . tail) [[1..5],[3..6],[1..7]]
+-- => [-14,-15,-27]
+
+-- sum (replicate 5 (max 6.7 8.9))
+-- => (sum . replicate 5) (max 6.7 8.9)
+-- => sum . replicate 5 $ max 6.7 8.9
+-- => 44.5
+
+sum'' :: (Num a) => [a] -> a
+-- sum'' xs = foldl (+) 0 xs
+sum'' = foldl (+) 0
+
+fn :: (Floating a, Integral b, RealFrac a) => a -> b
+-- fn x = ceiling (negate (tan (cos (max 50 x))))
+fn = ceiling . negate . tan .cos . max 50
+
+oddSquareSum :: Integer
+-- oddSquareSum = sum (takeWhile (<10000) (filter odd (map (^2) [1..])))
+oddSquareSum = sum . takeWhile (<10000) . filter odd $ map (^2) [1..]
