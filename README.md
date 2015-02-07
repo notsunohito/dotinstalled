@@ -9,3 +9,6 @@
 ### Sequelize
 * [Docs](http://sequelize.readthedocs.org/en/latest/)
 * [Tutorial](https://github.com/sequelize/express-example#the-setup)
+
+### Scotty
+* [Tutorial](http://adit.io/posts/2013-04-15-making-a-website-with-haskell.html)
