@@ -12,3 +12,7 @@
 
 ### Scotty
 * [Tutorial](http://adit.io/posts/2013-04-15-making-a-website-with-haskell.html)
+
+### Larn You a Haskell
+* [Tutorial](http://learnyouahaskell.com)
+
