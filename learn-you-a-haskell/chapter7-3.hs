@@ -1,3 +1,47 @@
+import Data.Map
+
+
+data Tree a = EmptyTree | Node a (Tree a) (Tree a) deriving (Show)
+
+singleton' :: a -> Tree a
+singleton' x = Node x EmptyTree EmptyTree
+
+treeInsert :: (Ord a) => a -> Tree a -> Tree a
+treeInsert x EmptyTree = singleton' x
+treeInsert x (Node a left right)
+    | x == a = Node x left right
+    | x < a  = Node a (treeInsert x left) right
+    | x > a  = Node a left (treeInsert x right)
+
+treeElem :: (Ord a) => a -> Tree a -> Bool
+treeElem x EmptyTree = False
+treeElem x (Node a left right)
+    | x == a = True
+    | x < a  = treeElem x left
+    | x > a  = treeElem x right
+
+-- let numsTree = Prelude.foldr treeInsert EmptyTree nums
+-- numsTree
+-- => Node 5
+--        (Node 3
+--            (Node 1 EmptyTree EmptyTree)
+--            (Node 4 EmptyTree EmptyTree)
+--        )
+--        (Node 7
+--            (Node 6 EmptyTree EmptyTree)
+--            (Node 8 EmptyTree EmptyTree)
+--        )
+
+-- 8 `treeElem` numsTree
+-- => True
+-- 100 `treeElem` numsTree
+-- => False
+-- 1 `treeElem` numsTree
+-- => True
+-- 10 `treeElem` numsTree
+-- => False
+
+
 -- class Eq a where
 --     (==) :: a -> a -> Bool
 --     (/=) :: a -> a -> Bool
@@ -99,3 +143,65 @@ yesnoIf yesnoVal yesResult noResult =
 -- => "YEAH!"
 -- yesnoIf Nothing "YEAH!" "NO!"
 -- => "NO!"
+
+-- :info Functor
+-- => class Functor f where
+--      fmap :: (a -> b) -> f a -> f b
+--      (GHC.Base.<$) :: a -> f b -> f a
+--        -- Defined in `GHC.Base'
+--    instance Functor (Either a) -- Defined in `Data.Either'
+--    instance Functor Maybe -- Defined in `Data.Maybe'
+--    instance Functor [] -- Defined in `GHC.Base'
+--    instance Functor IO -- Defined in `GHC.Base'
+--    instance Functor ((->) r) -- Defined in `GHC.Base'
+--    instance Functor ((,) a) -- Defined in `GHC.Base'
+
+-- fmap (*2) [1..3]
+-- => [2,4,6]
+-- map (*2) [1..3]
+-- => [2,4,6]
+
+-- instance Functor Maybe where
+--     fmap f (Just x) = Just (f x)
+--     fmap f Nothing  = Nothing
+
+-- fmap (++ " HEY GUYS IM INSIDE THE JUST") (Just "Something serious.")
+-- => Just "Something serious. HEY GUYS IM INSIDE THE JUST"
+-- fmap (++ "HEY GUYS IM INSIDE THE JUST") Nothing
+-- => Nothing
+-- fmap (*2) (Just 200)
+-- => Just 200
+-- fmap (*2) Nothing
+-- => Nothing
+
+instance Functor Tree where
+    fmap f EmptyTree = EmptyTree
+    fmap f (Node x left right)
+                      = Node (f x) (fmap f left) (fmap f right)
+-- fmap (*2) EmptyTree
+-- => EmptyTree
+-- fmap (*2) (foldr treeInsert EmptyTree [5,7,3])
+-- => Node 6
+--         EmptyTree
+--         (Node 14
+--                   (Node 10
+--                         EmptyTree
+--                         EmptyTree)
+--                   EmptyTree)
+
+-- instance Functor (Either a) where
+--     fmap f (Right x) = Right (f x)
+--     fmap f (Left x)  = Left x
+
+-- :k Int
+-- => Int :: *
+-- :k Maybe
+-- => Maybe :: * -> *
+-- :k Maybe Int
+-- => Maybe Int :: *
+-- :k Either
+-- => Either :: * -> * -> *
+-- :k Either String
+-- => Either String :: * -> *
+-- :k Either String Int
+-- => Either String Int :: *
