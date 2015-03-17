@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>Step3</title>
+    <!-- 最新(0.11.5)だと動かない -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.11.5/vue.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.10.5/vue.min.js"></script>
+  </head>
+<body>
+
+  <div id="app">
+    <header-template></header-template>
+    <div v-repeat="u : user" v-component="item-template" v-with="u">
+  </div>
+
+  <script id="headerTemplate" type="text/template">
+    <h3 v-on="click:hello">My Todo</h3>
+  </script>
+
+  <script src="component.js"></script>
+
+</body>
+</html>

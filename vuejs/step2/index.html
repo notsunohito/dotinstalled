@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <title>Step2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.11.5/vue.min.js"></script>
+  </head>
+<body>
+
+  <div id="todo">
+    <h1>My Todos</h1>
+    <div v-repeat="t : todos | orderBy 'isDone'">
+      <input type="checkbox" v-model="t.isDone" />
+      {{$index}}:{{t.title}}
+    </div> 
+    <input type="button" v-on="click: addTodo" value="add todo" />
+    <div>
+      left {{lefts}} tasks.
+    </div> 
+  </div>
+
+  <script src="todo.js"></script>
+
+</body>
+</html>
