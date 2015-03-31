@@ -1,0 +1,9 @@
+{
+  "name": "promises",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "bluebird": "^2.9.21",
+    "w3c-xmlhttprequest": "^1.2.2"
+  }
+}
