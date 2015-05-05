@@ -22,3 +22,7 @@
 
 ### Html5 Canvas
 * [Tutorial](http://dotinstall.com/lessons/basic_canvas)
+
+### Ansible
+* [Docs](http://docs.ansible.com/)
+* [Tutorial](http://dotinstall.com/lessons/basic_ansible) 
