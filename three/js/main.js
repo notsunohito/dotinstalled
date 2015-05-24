@@ -59,7 +59,7 @@ axis.position.set(0, 0, 0);
 scene.add(axis);
 
 // rendering
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.CanvasRenderer();
 renderer.setSize(width, height);
 renderer.setClearColor(0xeeeeee, 1);
 renderer.shadowMapEnabled = true;
