@@ -1,0 +1,27 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+    - name: Run apt-get update
+      apt: update_cache=yes
+
+    - name: Run apt-get upgrade
+      apt: upgrade=dist
+
+    - name: Ensure pip is installed
+      apt: name=python-pip state=installed
+
+    - name: Ensure docker is installed
+      shell: wget -qO- https://get.docker.com/ | sh  creates=/etc/default/docker
+
+    - name: Ensure docker is started and enabled
+      service: name=docker state=started enabled=yes
+
+    - name: Ensure docker dns config is set
+      lineinfile: dest=/etc/default/docker state=present regexp='^#?DOCKER_OPTS' line='DOCKER_OPTS="--dns 8.8.8.8"'
+
+    - name: Ensure fig is installed
+      pip: name=fig state=present
+
+    - name: Copy fig/ to ~/
+      copy: src=./build dest=/home/vagrant/
